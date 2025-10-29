@@ -1,51 +1,40 @@
-# 🧠 Financial News Sentiment Analysis
+# 💹 Financial News Sentiment Analysis using Transformers
 
-This project performs **sentiment analysis on financial news headlines** using a combination of three public Kaggle datasets.  
-The goal is to classify financial news into **Positive**, **Negative**, or **Neutral** sentiments using NLP and deep learning techniques.
+This project performs **sentiment analysis on financial news headlines** using **Hugging Face Transformers**.  
+It combines multiple Kaggle financial sentiment datasets and fine-tunes a transformer-based model (BERT/FinBERT) to classify news as **Positive**, **Negative**, or **Neutral**.
 
 ---
 
-## 📂 Datasets Used
+## 📘 Google Colab Notebook
 
-1. [Sentiment Analysis Labelled Financial News Data](https://www.kaggle.com/datasets/aravsood7/sentiment-analysis-labelled-financial-news-data)
-2. [Financial Sentiment Analysis Dataset](https://www.kaggle.com/datasets/sbhatti/financial-sentiment-analysis)
+Run the complete workflow in Google Colab:  
+🔗 [Open Notebook](https://colab.research.google.com/drive/15C4B8XyTEksGCxsAG0m0LZT022fbYQmD?usp=sharing)
+
+---
+
+## 📊 Datasets Used
+
+1. [Sentiment Analysis Labelled Financial News Data](https://www.kaggle.com/datasets/aravsood7/sentiment-analysis-labelled-financial-news-data)  
+2. [Financial Sentiment Analysis Dataset](https://www.kaggle.com/datasets/sbhatti/financial-sentiment-analysis)  
 3. [Sentiment Analysis for Financial News](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news)
 
-All three datasets were merged, cleaned, and preprocessed to create a **comprehensive dataset** for financial sentiment classification.
+These datasets are **merged and cleaned** into one combined dataset for training and evaluation.
 
 ---
 
-## ⚙️ Model Workflow
+## ⚙️ Workflow Overview
 
-1. **Data Loading & Merging**
-   - Loads all three datasets from Kaggle.
-   - Standardizes sentiment labels (`positive`, `negative`, `neutral`).
-   - Combines and cleans the text data.
+### 1️⃣ Data Preprocessing
+- Load and merge all Kaggle datasets.  
+- Clean text (remove URLs, symbols, extra spaces).  
+- Normalize sentiment labels (`positive`, `neutral`, `negative`).
 
-2. **Text Preprocessing**
-   - Lowercasing, removing punctuation, numbers, and stopwords.
-   - Tokenization and padding for deep learning input.
+### 2️⃣ Model Preparation
+- Tokenize text using a Hugging Face tokenizer.  
+- Split dataset into train/test (e.g., 80/20).  
+- Convert to Hugging Face `Dataset` objects.
 
-3. **Model Training**
-   - Trained using LSTM / BiLSTM (or transformer if implemented in Colab).
-   - Model evaluated using accuracy, precision, recall, and F1-score.
-
-4. **Inference**
-   - Allows sentiment prediction for new unseen financial news.
-
----
-
-## 🚀 Getting Started
-
-### 🔹 Option 1 — Run on Google Colab
-You can directly open and run the Colab notebook here:  
-[📘 Google Colab Notebook](https://colab.research.google.com/drive/15C4B8XyTEksGCxsAG0m0LZT022fbYQmD?usp=sharing)
-
-Colab already comes with most dependencies preinstalled, but you can still use the setup script if needed.
-
-### 🔹 Option 2 — Run Locally
-
-#### 1️⃣ Clone this repository
-```bash
-git clone https://github.com/<your-username>/<your-repo-name>.git
-cd <your-repo-name>
+### 3️⃣ Model Training
+- Fine-tune a transformer (e.g., **BERT**, **FinBERT**, or **DistilBERT**) using:
+  ```python
+  AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=3)
